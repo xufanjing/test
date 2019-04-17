@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="../css/index.css">
+        <script src="../js/jquery-1.11.0.js"></script>
+    </head>
+
+    <boby>
+        <div id="main">
+            <div style="position: relative; height: 400px; ">
+                <img src="../img/quchifan.jpg" width="300px" height="250px" style="background: rgba(150,255,255,.1); position: absolute;top: 30px; left: 50%; margin-left: -150px;"/>
+                <p class="name">我要吃饭了</p>
+            </div>
+            <button class="begin">
+                开始
+            </button>
+            <button class="stop">
+                暂停
+            </button>
+        </div>
+    </body>
+
+        <script language="javascript">
+            window.onload = function() {
+                
+                var time;
+                var oName = document.getElementsByClassName('name')[0];
+                var oImg = document.getElementsByTagName('img')[0]
+                var oBegin = document.getElementsByClassName('begin')[0];
+                var oStop = document.getElementsByClassName('stop')[0];
+                
+                 $.ajax({
+                    url: '../json/food.json',
+                    async: true,
+                    success: function (data) {
+                        oBegin.onclick = function(){
+                            time = setInterval(() =>{
+                                var index = Math.floor((Math.random() * data.test.length));
+                                oName.innerHTML = data.test[index].name;
+                                oImg.src = data.test[index].imgsrc;
+                            },20);
+                            oBegin.disabled=true;
+                        }
+                        
+                        oStop.onclick = function(){
+                            clearInterval(time);
+                            oBegin.disabled=false;
+                        }
+                        
+                    }
+                });
+            }
+        </script>
+
+</html>
